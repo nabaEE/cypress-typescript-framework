@@ -16,7 +16,7 @@ describe('Verify home page', ()=> {
         automationPracticeUtil.verifyGetAPIProducts().then(response=> {
     expect(response.status).to.eq(200);
     const parsed =  typeof response.body === 'string'? JSON.parse(response.body) : response.body;
-    expect(parsed.responseCode).to.eq(200); // ✅ Check outer property
+    expect(parsed.responseCode).to.eq(200);
     expect(parsed.products).not.to.be.null;
     console.log(parsed.products[0]);
     expect(parsed.products.length).to.be.greaterThan(0);
