@@ -21,6 +21,8 @@ describe("Verify api tests", () => {
           : response.body;
       expect(parsed.responseCode).to.eq(200);
       expect(parsed.products).not.to.be.null;
+      // Optionally log the first product for debugging
+      // console.log(parsed.products[0]);
       expect(parsed.products.length).to.be.greaterThan(0);
       expect(parsed.products[0].name).to.be.a("string");
     });
