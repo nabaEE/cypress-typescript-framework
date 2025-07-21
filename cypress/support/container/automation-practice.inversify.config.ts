@@ -3,6 +3,8 @@ import { AutomationPracticeUtil } from "../interfaces/interfaces-automation-prac
 import { AutomationPracticeImpl } from "../domain/automation-practice-impl";
 import { automationSymbol } from "./automation-practice.symbol";
 
- export const container = new Container;
+export const container = new Container();
 
- container.bind<AutomationPracticeUtil>(automationSymbol.automationPracticeUtil).to(AutomationPracticeImpl)
+container
+  .bind<AutomationPracticeUtil>(automationSymbol.automationPracticeUtil)
+  .to(AutomationPracticeImpl);

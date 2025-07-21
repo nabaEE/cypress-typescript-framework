@@ -1,3 +1,3 @@
- export const automationSymbol ={
- automationPracticeUtil: Symbol('AutomationPracticeUtil')
-}
+export const automationSymbol = {
+  automationPracticeUtil: Symbol("AutomationPracticeUtil"),
+};

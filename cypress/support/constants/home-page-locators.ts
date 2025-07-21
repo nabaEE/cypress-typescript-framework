@@ -1,3 +1,1 @@
-export const homePageLocators = {
-
-}
+export const homePageLocators = {};
