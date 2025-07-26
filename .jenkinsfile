@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage('Clone GitHub repo') {
       steps {
-        git url: 'https://github.com/your-username/your-cypress-repo.git', 
+        git url: 'https://github.com/nabaEE/cypress-typescript-framework.git', 
             branch: 'main',
             credentialsId: 'github-creds' // <--- Add this line
       }
