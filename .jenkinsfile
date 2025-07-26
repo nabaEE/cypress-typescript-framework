@@ -1,24 +1,25 @@
 pipeline {
-  agent any
-
-  tools {
-    nodejs 'Node 18'  // Use the name you added in Global Tool Config
+  agent {
+    docker {
+      image 'cypress/included:14.4.1'
+      args '-u root' // Run as root to avoid permission issues
+    }
   }
 
-  environment {
-    CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
+  tools {
+    nodejs 'Node 18' // This should be set up in Global Tool Configuration
   }
 
   stages {
     stage('Checkout Code') {
       steps {
-        git branch: 'main', url: 'https://github.com/nabaEE/cypress-typescript-framework.git'
+        git 'https://github.com/nabaEE/cypress-typescript-framework.git'
       }
     }
 
     stage('Install Dependencies') {
       steps {
-        sh 'npm ci'  // or 'npm install' if you prefer
+        sh 'npm ci'
       }
     }
 
@@ -31,7 +32,7 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
+      archiveArtifacts artifacts: '**/cypress/screenshots/**/*', allowEmptyArchive: true
     }
   }
 }
