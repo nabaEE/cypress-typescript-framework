@@ -1,0 +1,37 @@
+pipeline {
+  agent any
+
+  tools {
+    nodejs 'Node 18'  // Use the name you added in Global Tool Config
+  }
+
+  environment {
+    CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
+  }
+
+  stages {
+    stage('Checkout Code') {
+      steps {
+        git branch: 'main', url: 'https://github.com/nabaEE/cypress-typescript-framework.git'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm ci'  // or 'npm install' if you prefer
+      }
+    }
+
+    stage('Run Cypress Tests') {
+      steps {
+        sh 'npx cypress run'
+      }
+    }
+  }
+
+  post {
+    always {
+      archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
+    }
+  }
+}
