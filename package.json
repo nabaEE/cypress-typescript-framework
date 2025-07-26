@@ -5,7 +5,8 @@
   "scripts": {
     "test": "cypress run",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+     "openCypress": "cypress open"
   },
   "dependencies": {
     "@types/deep-equal-in-any-order": "^1.0.4",

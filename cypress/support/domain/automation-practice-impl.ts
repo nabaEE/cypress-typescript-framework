@@ -6,6 +6,7 @@ import { ProductsResponse } from "../modals/automation-practice-modals";
 
 @injectable()
 export class AutomationPracticeImpl implements AutomationPracticeUtil {
+  
   verifySearchProducts(): Cypress.Chainable<Cypress.Response<string>> {
     let postRequest: Partial<Cypress.RequestOptions> = {};
     (postRequest.method = "POST"),
