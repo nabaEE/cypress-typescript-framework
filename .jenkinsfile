@@ -2,30 +2,31 @@ pipeline {
   agent any
 
   tools {
-    nodejs 'Node 18' // Make sure this label exists in Jenkins tool config
+    nodejs 'Node 18'
   }
 
   environment {
-    HOME = "${env.WORKSPACE}"
+    CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
   }
 
   stages {
     stage('Clone GitHub repo') {
       steps {
-        git url: 'https://github.com/nabaEE/cypress-typescript-framework.git', 
-            branch: 'main',
-            credentialsId: 'github-creds' // <--- Add this line
+        git branch: 'main',
+            url: 'https://github.com/your-username/your-cypress-repo.git',
+            credentialsId: 'github-creds'  // <-- Your Jenkins credential ID here
       }
     }
 
-    stage('Run Cypress tests') {
+    stage('Install Dependencies') {
       steps {
-        script {
-          docker.image('cypress/included:14.4.1').inside('-u root') {
-            sh 'npm ci'             // install packages
-            sh 'npx cypress run'    // run Cypress tests
-          }
-        }
+        sh 'npm ci'
+      }
+    }
+
+    stage('Run Cypress Tests') {
+      steps {
+        sh 'npx cypress run'
       }
     }
   }
