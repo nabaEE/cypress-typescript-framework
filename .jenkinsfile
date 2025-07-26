@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools {
-    nodejs 'Node 18' // Ensure this matches the label in Global Tool Config
+    nodejs 'Node 18' // Make sure this label exists in Jenkins tool config
   }
 
   environment {
@@ -12,8 +12,9 @@ pipeline {
   stages {
     stage('Clone GitHub repo') {
       steps {
-        // Clone your actual GitHub project
-        git url: 'https://github.com/your-username/your-cypress-repo.git', branch: 'main'
+        git url: 'https://github.com/your-username/your-cypress-repo.git', 
+            branch: 'main',
+            credentialsId: 'github-creds' // <--- Add this line
       }
     }
 
