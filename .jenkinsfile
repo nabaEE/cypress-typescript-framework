@@ -4,7 +4,8 @@ pipeline {
   stages {
     stage('Clone Repo') {
       steps {
-        git 'https://github.com/nabaEE/cypress-typescript-framework.git'
+        // No credentials needed since repo is public
+        git url: 'https://github.com/nabaEE/cypress-typescript-framework.git'
       }
     }
 
