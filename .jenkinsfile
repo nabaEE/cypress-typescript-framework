@@ -1,5 +1,5 @@
 node {
-  // Define environment variable (just like in Declarative)
+  // Set environment variable
   env.CYPRESS_CACHE_FOLDER = "${env.WORKSPACE}/.cache/Cypress"
 
   stage('Clone GitHub repo') {
@@ -8,12 +8,13 @@ node {
         credentialsId: 'github-creds'
   }
 
-  stage('Run Tests in Cypress Container') {
-    docker.image('cypress/included:14.4.1').inside('-u root') {
-      // Install dependencies
-      sh 'npm ci'
+  stage('Run Cypress Tests in Docker') {
+    // Pull and use the Docker image for Cypress
+    def cypressImage = docker.image('cypress/included:14.4.1')
+    cypressImage.pull() // optional: to make sure it’s up-to-date
 
-      // Run Cypress tests
+    cypressImage.inside('-u root') {
+      sh 'npm ci'
       sh 'npx cypress run'
     }
   }
