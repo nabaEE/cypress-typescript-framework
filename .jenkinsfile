@@ -1,34 +1,20 @@
-pipeline {
-  agent {
-    docker {
-      image 'cypress/included:14.4.1'
-      args '-u root' // allow installing packages as root user
-    }
+node {
+  // Define environment variable (just like in Declarative)
+  env.CYPRESS_CACHE_FOLDER = "${env.WORKSPACE}/.cache/Cypress"
+
+  stage('Clone GitHub repo') {
+    git branch: 'main',
+        url: 'https://github.com/nabaEE/cypress-typescript-framework.git',
+        credentialsId: 'github-creds'
   }
 
-  environment {
-    CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
-  }
+  stage('Run Tests in Cypress Container') {
+    docker.image('cypress/included:14.4.1').inside('-u root') {
+      // Install dependencies
+      sh 'npm ci'
 
-  stages {
-    stage('Clone GitHub repo') {
-      steps {
-        git branch: 'main',
-            url: 'https://github.com/nabaEE/cypress-typescript-framework.git',
-            credentialsId: 'github-creds'
-      }
-    }
-
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm ci'
-      }
-    }
-
-    stage('Run Cypress Tests') {
-      steps {
-        sh 'npx cypress run'
-      }
+      // Run Cypress tests
+      sh 'npx cypress run'
     }
   }
 }
